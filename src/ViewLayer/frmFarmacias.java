@@ -5,7 +5,7 @@
  */
 package ViewLayer;
 
-import BusinessModelLayer.Farmacia;
+import BusinessModelLayer.Sucursales;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,9 +17,16 @@ public class frmFarmacias extends javax.swing.JInternalFrame {
     /**
      * Creates new form frmFarmacias
      */
+    Sucursales farmacia = new Sucursales();
+
     public frmFarmacias() {
         initComponents();
-        jtFarmacias.setModel(new Farmacia().GetAllModel());
+        jtFarmacias.setModel(new Sucursales().GetAllModelNew());
+
+        for (int i = 0; i < farmacia.GetAllModel().getColumnCount(); i++) {
+            cbColumna.addItem(farmacia.GetAllModel().getColumnName(i).toString());
+        }
+        
     }
 
     /**
@@ -36,6 +43,11 @@ public class frmFarmacias extends javax.swing.JInternalFrame {
         bNuevo = new javax.swing.JButton();
         bModificar = new javax.swing.JButton();
         bEliminar = new javax.swing.JButton();
+        bOrdenar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        cbColumna = new javax.swing.JComboBox<>();
+        cbBusqueda = new javax.swing.JComboBox<>();
+        bBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtFarmacias = new javax.swing.JTable();
 
@@ -93,6 +105,45 @@ public class frmFarmacias extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(bEliminar);
 
+        bOrdenar.setText("Ordenar");
+        bOrdenar.setFocusable(false);
+        bOrdenar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bOrdenar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bOrdenarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(bOrdenar);
+
+        jLabel1.setText("Buscar por:");
+        jToolBar1.add(jLabel1);
+
+        cbColumna.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbColumnaItemStateChanged(evt);
+            }
+        });
+        cbColumna.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cbColumnaMouseExited(evt);
+            }
+        });
+        jToolBar1.add(cbColumna);
+
+        jToolBar1.add(cbBusqueda);
+
+        bBuscar.setText("Buscar");
+        bBuscar.setFocusable(false);
+        bBuscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bBuscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bBuscarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(bBuscar);
+
         jtFarmacias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -111,15 +162,15 @@ public class frmFarmacias extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 684, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 682, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE))
         );
 
         pack();
@@ -130,8 +181,8 @@ public class frmFarmacias extends javax.swing.JInternalFrame {
         obj.setTitle("Nueva Farmacia");
         obj.setModal(true);
         obj.setVisible(true);
-        
-        jtFarmacias.setModel(new Farmacia().GetAllModel());
+
+        jtFarmacias.setModel(new Sucursales().GetAllModelNew());
     }//GEN-LAST:event_bNuevoActionPerformed
 
     private void bModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModificarActionPerformed
@@ -141,7 +192,7 @@ public class frmFarmacias extends javax.swing.JInternalFrame {
             obj.setTitle("Modificar Farmacia");
             obj.setModal(true);
             obj.setVisible(true);
-            jtFarmacias.setModel(new Farmacia().GetAllModel());
+            jtFarmacias.setModel(new Sucursales().GetAllModelNew());
 
         } else {
             JOptionPane.showMessageDialog(rootPane, "Debes seleccionar un producto");
@@ -152,8 +203,8 @@ public class frmFarmacias extends javax.swing.JInternalFrame {
         if (jtFarmacias.getSelectedRow() >= 0) {
             if (JOptionPane.showConfirmDialog(this, "¿Desea eliminar este elemento?", "Eliminar", JOptionPane.YES_NO_OPTION) < 1) {
                 int idFarmacia = (int) jtFarmacias.getValueAt(jtFarmacias.getSelectedRow(), 0);
-                Farmacia obj = new Farmacia();
-                obj.setIdFarmacia(idFarmacia);
+                Sucursales obj = new Sucursales();
+                obj.setIdSucursal(idFarmacia);
                 if (obj.Delete()) {
                     JOptionPane.showMessageDialog(this, "Producto eliminado");
                 }
@@ -166,16 +217,47 @@ public class frmFarmacias extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bEliminarActionPerformed
 
     private void bActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bActualizarActionPerformed
-        Farmacia obj = new Farmacia();
-        obj.GetAllModel();
+        Sucursales obj = new Sucursales();
+        jtFarmacias.setModel(obj.GetAllModelNew());
     }//GEN-LAST:event_bActualizarActionPerformed
+
+    private void bOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bOrdenarActionPerformed
+        jtFarmacias.setModel(farmacia.GetAllOrderBy());
+    }//GEN-LAST:event_bOrdenarActionPerformed
+
+    private void bBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarActionPerformed
+        jtFarmacias.setModel(farmacia.Search(cbColumna.getSelectedItem().toString(), cbBusqueda.getSelectedItem().toString()));
+    }//GEN-LAST:event_bBuscarActionPerformed
+
+    private void cbColumnaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbColumnaItemStateChanged
+        int selected = 0;
+
+        cbBusqueda.removeAllItems();
+
+        selected = cbColumna.getSelectedIndex();
+        System.out.println(cbColumna.getSelectedIndex() + 1);
+        for (int i = 0; i < farmacia.GetAllModel().getRowCount(); i++) {
+
+            cbBusqueda.addItem(farmacia.GetAllModel().getValueAt(i, selected).toString());
+
+        }
+    }//GEN-LAST:event_cbColumnaItemStateChanged
+
+    private void cbColumnaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbColumnaMouseExited
+
+    }//GEN-LAST:event_cbColumnaMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bActualizar;
+    private javax.swing.JButton bBuscar;
     private javax.swing.JButton bEliminar;
     private javax.swing.JButton bModificar;
     private javax.swing.JButton bNuevo;
+    private javax.swing.JButton bOrdenar;
+    private javax.swing.JComboBox<String> cbBusqueda;
+    private javax.swing.JComboBox<String> cbColumna;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTable jtFarmacias;

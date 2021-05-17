@@ -5,8 +5,9 @@
  */
 package ViewLayer;
 
-import BusinessModelLayer.Farmacia;
-import BusinessModelLayer.Producto;
+import BusinessModelLayer.Categorias;
+import BusinessModelLayer.Sucursales;
+import BusinessModelLayer.Productos;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -17,9 +18,9 @@ import javax.swing.JOptionPane;
 public class frmNProducto extends javax.swing.JDialog {
 
     int idProducto = 0;
-    private Producto producto = new Producto();
-    private Farmacia farmacia = new Farmacia();
-
+    private Productos producto = new Productos();
+    private Categorias categoria = new Categorias();
+    
     public frmNProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -30,8 +31,8 @@ public class frmNProducto extends javax.swing.JDialog {
     public frmNProducto() {
         initComponents();
         setLocationRelativeTo(null);
-        for (int i = 0; i < farmacia.GetAllModel().getRowCount(); i++) {
-            cbIdFarmacia.addItem(""+farmacia.GetAllModel().getValueAt(i, 1)); 
+        for (int i = 0; i < categoria.GetAllModel().getRowCount(); i++) {
+            cbCategoria.addItem(""+categoria.GetAllModel().getValueAt(i, 1)); 
             
         }
     }
@@ -43,14 +44,15 @@ public class frmNProducto extends javax.swing.JDialog {
         producto.setIdProducto(idProducto);
         producto.GetById();
         tNombre.setText(producto.getNombre());
+        tPrecio.setText(""+producto.getPrecio());
         tCaducidad.setDate(producto.getCaducidad());
-        tStock.setText("" + producto.getStock());
+        tDescuento.setText("" + producto.getDescuento());
 
-        for (int i = 0; i < farmacia.GetAllModel().getRowCount(); i++) {
-            cbIdFarmacia.addItem(farmacia.GetAllModel().getValueAt(i, 1).toString());
+        for (int i = 0; i < categoria.GetAllModel().getRowCount(); i++) {
+            cbCategoria.addItem(categoria.GetAllModel().getValueAt(i, 1).toString());
             
-            if (producto.getIdFarmacia() == (int) farmacia.GetAllModel().getValueAt(i, 0)) {
-                cbIdFarmacia.setSelectedItem("" + farmacia.GetAllModel().getValueAt(i, 1));
+            if (producto.getIdCategoria()== (int) categoria.GetAllModel().getValueAt(i, 0)) {
+                cbCategoria.setSelectedItem("" + categoria.GetAllModel().getValueAt(i, 1));
             }
         }
     }
@@ -66,14 +68,16 @@ public class frmNProducto extends javax.swing.JDialog {
 
         lNombre = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         tNombre = new javax.swing.JTextField();
-        tStock = new javax.swing.JTextField();
         bCancelar = new javax.swing.JButton();
         bGuardar = new javax.swing.JButton();
         tCaducidad = new com.toedter.calendar.JDateChooser();
-        cbIdFarmacia = new javax.swing.JComboBox<>();
+        tPrecio = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        tDescuento = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        cbCategoria = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nuevo Producto");
@@ -82,10 +86,6 @@ public class frmNProducto extends javax.swing.JDialog {
         lNombre.setText("Nombre");
 
         jLabel2.setText("Caducidad");
-
-        jLabel3.setText("Stock");
-
-        jLabel4.setText("ID Farmacia");
 
         bCancelar.setText("Cancelar");
         bCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -101,30 +101,43 @@ public class frmNProducto extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setText("Precio");
+
+        jLabel3.setText("Descuento");
+
+        jLabel4.setText("Categoria");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(bCancelar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bGuardar))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lNombre)
+                                .addComponent(jLabel1))
+                            .addGap(23, 23, 23)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(lNombre))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                            .addComponent(tStock, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                            .addComponent(tCaducidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbIdFarmacia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(bCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bGuardar)))
-                .addContainerGap(49, Short.MAX_VALUE))
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tDescuento, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(tCaducidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,22 +147,26 @@ public class frmNProducto extends javax.swing.JDialog {
                     .addComponent(lNombre)
                     .addComponent(tNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(tPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(tCaducidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(tStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(cbIdFarmacia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bCancelar)
                     .addComponent(bGuardar))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -160,19 +177,19 @@ public class frmNProducto extends javax.swing.JDialog {
     }//GEN-LAST:event_bCancelarActionPerformed
 
     private void bGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGuardarActionPerformed
-        int idFarmacia = 0;
-        for (int i = 0; i < farmacia.GetAllModel().getRowCount(); i++) {
-            if (cbIdFarmacia.getSelectedItem().equals(farmacia.GetAllModel().getValueAt(i, 1))) {
-                 idFarmacia = (int) farmacia.GetAllModel().getValueAt(i, 0);
-                 System.out.println(farmacia.GetAllModel().getValueAt(i, 0));
+        int idCategoria = 0;
+        for (int i = 0; i < categoria.GetAllModel().getRowCount(); i++) {
+            if (cbCategoria.getSelectedItem().equals(categoria.GetAllModel().getValueAt(i, 1))) {
+                 idCategoria = (int) categoria.GetAllModel().getValueAt(i, 0);
+                 System.out.println(categoria.GetAllModel().getValueAt(i, 0));
             }
         }
         if (producto.getIdProducto() > 0) {
             producto.setNombre(tNombre.getText());
             producto.setCaducidad(tCaducidad.getDate());
-            producto.setStock(Integer.parseInt(tStock.getText()));
-            producto.setIdFarmacia(idFarmacia);
-            producto.setActivo(1);
+            producto.setPrecio(Double.parseDouble(tPrecio.getText()));
+            producto.setIdCategoria(idCategoria);
+            producto.setActivo(true);
             
             if (producto.Update()) {
                 JOptionPane.showMessageDialog(null, "Producto actualizado correctamente");
@@ -180,11 +197,12 @@ public class frmNProducto extends javax.swing.JDialog {
             }
 
         } else {
-            if (new Producto(0, tNombre.getText(),
+            if (new Productos(0, tNombre.getText(),
+                    Double.parseDouble(tPrecio.getText()),
                     tCaducidad.getDate(),
-                    Integer.parseInt(tStock.getText()),
-                    idFarmacia,
-                    1).Add()) {
+                    Double.parseDouble(tDescuento.getText()),
+                    idCategoria,
+                    true).Add()) {
                 JOptionPane.showMessageDialog(this, "Producto agregado correctamente");
                 this.dispose();
             }
@@ -236,13 +254,15 @@ public class frmNProducto extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bCancelar;
     private javax.swing.JButton bGuardar;
-    private javax.swing.JComboBox<String> cbIdFarmacia;
+    private javax.swing.JComboBox<String> cbCategoria;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lNombre;
     private com.toedter.calendar.JDateChooser tCaducidad;
+    private javax.swing.JTextField tDescuento;
     private javax.swing.JTextField tNombre;
-    private javax.swing.JTextField tStock;
+    private javax.swing.JTextField tPrecio;
     // End of variables declaration//GEN-END:variables
 }

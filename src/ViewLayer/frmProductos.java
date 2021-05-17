@@ -5,8 +5,9 @@
  */
 package ViewLayer;
 
-import BusinessModelLayer.Producto;
+import BusinessModelLayer.Productos;
 import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -20,9 +21,17 @@ public class frmProductos extends javax.swing.JInternalFrame {
     /**
      * Creates new form frmProductos
      */
+    
+    Productos producto = new Productos();
     public frmProductos() {
         initComponents();
-        jtProductos.setModel(new Producto().GetAllModel());
+        jtProductos.setModel(new Productos().GetAllModelNew());
+        
+        for (int i = 0; i < producto.GetAllModel().getColumnCount(); i++) {
+            cbColumna.addItem(producto.GetAllModel().getColumnName(i).toString());
+        }
+        
+        
     }
 
     /**
@@ -39,6 +48,12 @@ public class frmProductos extends javax.swing.JInternalFrame {
         Nuevo = new javax.swing.JButton();
         bModificar = new javax.swing.JButton();
         bEliminar = new javax.swing.JButton();
+        bOrdenar = new javax.swing.JButton();
+        bBuscar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        cbColumna = new javax.swing.JComboBox<>();
+        cbBusqueda = new javax.swing.JComboBox<>();
+        bBuscar1 = new javax.swing.JButton();
         ScrollPanel = new javax.swing.JScrollPane();
         jtProductos = new javax.swing.JTable();
 
@@ -98,6 +113,56 @@ public class frmProductos extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(bEliminar);
 
+        bOrdenar.setText("Ordenar");
+        bOrdenar.setFocusable(false);
+        bOrdenar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bOrdenar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bOrdenarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(bOrdenar);
+
+        bBuscar.setText("Buscar");
+        bBuscar.setFocusable(false);
+        bBuscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bBuscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bBuscarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(bBuscar);
+
+        jLabel1.setText("Buscar por:");
+        jToolBar1.add(jLabel1);
+
+        cbColumna.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbColumnaItemStateChanged(evt);
+            }
+        });
+        cbColumna.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cbColumnaMouseExited(evt);
+            }
+        });
+        jToolBar1.add(cbColumna);
+
+        jToolBar1.add(cbBusqueda);
+
+        bBuscar1.setText("Buscar");
+        bBuscar1.setFocusable(false);
+        bBuscar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bBuscar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bBuscar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bBuscar1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(bBuscar1);
+
         jtProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -143,7 +208,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         obj.setTitle("Nuevo Producto");
         obj.setModal(true);
         obj.setVisible(true);
-        jtProductos.setModel(new Producto().GetAllModel());
+        jtProductos.setModel(new Productos().GetAllModelNew());
     }//GEN-LAST:event_NuevoActionPerformed
 
     private void bModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModificarActionPerformed
@@ -153,7 +218,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             obj.setTitle("Modificar Producto");
             obj.setModal(true);
             obj.setVisible(true);
-            jtProductos.setModel(new Producto().GetAllModel());
+            jtProductos.setModel(new Productos().GetAllModelNew());
 
         } else {
             JOptionPane.showMessageDialog(rootPane, "Debes seleccionar un producto");
@@ -167,7 +232,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         if (jtProductos.getSelectedRow() >= 0) {
             if (JOptionPane.showConfirmDialog(this, "¿Desea eliminar este elemento?", "Eliminar", JOptionPane.YES_NO_OPTION) < 1) {
                 int idProducto = (int) jtProductos.getValueAt(jtProductos.getSelectedRow(), 0);
-                Producto obj = new Producto();
+                Productos obj = new Productos();
                 obj.setIdProducto(idProducto);
                 if (obj.Delete()) {
                     JOptionPane.showMessageDialog(this, "Producto eliminado");
@@ -183,17 +248,53 @@ public class frmProductos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bEliminarActionPerformed
 
     private void bActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bActualizarActionPerformed
-        Producto obj = new Producto();
-        obj.GetAllModel();
+        Productos obj = new Productos();
+        jtProductos.setModel(obj.GetAllModelNew());
     }//GEN-LAST:event_bActualizarActionPerformed
+
+    private void bOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bOrdenarActionPerformed
+        jtProductos.setModel(producto.GetAllOrderBy());
+    }//GEN-LAST:event_bOrdenarActionPerformed
+
+    private void bBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarActionPerformed
+
+    }//GEN-LAST:event_bBuscarActionPerformed
+
+    private void cbColumnaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbColumnaItemStateChanged
+        int selected = 0;
+
+        cbBusqueda.removeAllItems();
+
+        selected = cbColumna.getSelectedIndex();
+        System.out.println(cbColumna.getSelectedIndex() + 1);
+        for (int i = 0; i < producto.GetAllModel().getRowCount(); i++) {
+
+            cbBusqueda.addItem(producto.GetAllModel().getValueAt(i, selected).toString());
+
+        }
+    }//GEN-LAST:event_cbColumnaItemStateChanged
+
+    private void cbColumnaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbColumnaMouseExited
+
+    }//GEN-LAST:event_cbColumnaMouseExited
+
+    private void bBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscar1ActionPerformed
+        jtProductos.setModel(producto.Search(cbColumna.getSelectedItem().toString(), cbBusqueda.getSelectedItem().toString()));
+    }//GEN-LAST:event_bBuscar1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Nuevo;
     private javax.swing.JScrollPane ScrollPanel;
     private javax.swing.JButton bActualizar;
+    private javax.swing.JButton bBuscar;
+    private javax.swing.JButton bBuscar1;
     private javax.swing.JButton bEliminar;
     private javax.swing.JButton bModificar;
+    private javax.swing.JButton bOrdenar;
+    private javax.swing.JComboBox<String> cbBusqueda;
+    private javax.swing.JComboBox<String> cbColumna;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTable jtProductos;
     // End of variables declaration//GEN-END:variables

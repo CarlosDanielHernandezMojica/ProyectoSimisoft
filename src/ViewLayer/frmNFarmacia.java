@@ -5,8 +5,9 @@
  */
 package ViewLayer;
 
-import BusinessModelLayer.Farmacia;
-import BusinessModelLayer.Producto;
+import BusinessModelLayer.Contactos;
+import BusinessModelLayer.Sucursales;
+import BusinessModelLayer.Productos;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,9 +16,10 @@ import javax.swing.JOptionPane;
  */
 public class frmNFarmacia extends javax.swing.JDialog {
 
-    int idFarmacia;
-    Farmacia farmacia = new Farmacia();
-
+    int idSucursal;
+    Sucursales farmacia = new Sucursales();
+    Contactos contacto = new Contactos();
+            
     public frmNFarmacia(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -27,17 +29,27 @@ public class frmNFarmacia extends javax.swing.JDialog {
     public frmNFarmacia() {
         initComponents();
         setLocationRelativeTo(null);
+        for (int i = 0; i < contacto.GetAllModel().getRowCount(); i++) {
+            cbDireccion.addItem(""+contacto.GetAllModel().getValueAt(i, 1));    
+        }
     }
 
-    public frmNFarmacia(int idFarmacia) {
+    public frmNFarmacia(int idSucursal) {
         initComponents();
         setLocationRelativeTo(null);
-        this.idFarmacia = idFarmacia;
-        farmacia.setIdFarmacia(idFarmacia);
+        this.idSucursal = idSucursal;
+        farmacia.setIdSucursal(idSucursal);
         farmacia.GetById();
         tNombre.setText(farmacia.getNombre());
-        tDireccion.setText(farmacia.getDireccion());
-        tTelefono.setText(farmacia.getTelefono());
+
+        for (int i = 0; i < contacto.GetAllModel().getRowCount(); i++) {
+            cbDireccion.addItem(contacto.GetAllModel().getValueAt(i, 1).toString());
+            
+            if (farmacia.getIdContacto() == (int) contacto.GetAllModel().getValueAt(i, 0)) {
+                cbDireccion.setSelectedItem("" + contacto.GetAllModel().getValueAt(i, 1));
+            }
+        }
+
     }
 
     /**
@@ -52,11 +64,9 @@ public class frmNFarmacia extends javax.swing.JDialog {
         lNombre = new javax.swing.JLabel();
         bGuardar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         tNombre = new javax.swing.JTextField();
-        tDireccion = new javax.swing.JTextField();
-        tTelefono = new javax.swing.JTextField();
         bCancelar = new javax.swing.JButton();
+        cbDireccion = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -71,14 +81,6 @@ public class frmNFarmacia extends javax.swing.JDialog {
 
         jLabel2.setText("Direccion");
 
-        jLabel3.setText("Telefono");
-
-        tDireccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tDireccionActionPerformed(evt);
-            }
-        });
-
         bCancelar.setText("Cancelar");
         bCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,21 +94,18 @@ public class frmNFarmacia extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(lNombre))
-                        .addGap(17, 17, 17)
+                            .addComponent(lNombre)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(tNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                            .addComponent(tDireccion)
-                            .addComponent(tTelefono))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(cbDireccion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(bCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                         .addComponent(bGuardar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -117,49 +116,47 @@ public class frmNFarmacia extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lNombre)
                     .addComponent(tNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(tDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(tTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bCancelar)
                     .addComponent(bGuardar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void bGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGuardarActionPerformed
-        if (farmacia.getIdFarmacia() > 0) {
+        int idContacto = 0;
+        for (int i = 0; i < contacto.GetAllModel().getRowCount(); i++) {
+            if (cbDireccion.getSelectedItem().equals(contacto.GetAllModel().getValueAt(i, 1))) {
+                idContacto = (int) contacto.GetAllModel().getValueAt(i, 0);
+                System.out.println(contacto.GetAllModel().getValueAt(i, 0));
+            }
+        }
+        
+        if (farmacia.getIdSucursal() > 0) {
             farmacia.setNombre(tNombre.getText());
-            farmacia.setDireccion(tDireccion.getText());
-            farmacia.setTelefono(tTelefono.getText());
-            farmacia.setActivo(1);
+            farmacia.setIdContacto(idContacto);
+            farmacia.setActivo(true);
             if (farmacia.Update()) {
                 JOptionPane.showMessageDialog(null, "Farmacia actualizada correctamente");
                 this.dispose();
             }
 
         } else {
-            if (new Farmacia(0, tNombre.getText(),
-                    tDireccion.getText(),
-                    tTelefono.getText(),
-                    1).Add()) {
+            if (new Sucursales(0, tNombre.getText(),
+                    idContacto,
+                    true).Add()) {
                 JOptionPane.showMessageDialog(this, "Farmacia agregada correctamente");
                 this.dispose();
             }
         }
     }//GEN-LAST:event_bGuardarActionPerformed
-
-    private void tDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tDireccionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tDireccionActionPerformed
 
     private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
         this.dispose();
@@ -210,11 +207,9 @@ public class frmNFarmacia extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bCancelar;
     private javax.swing.JButton bGuardar;
+    private javax.swing.JComboBox<String> cbDireccion;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lNombre;
-    private javax.swing.JTextField tDireccion;
     private javax.swing.JTextField tNombre;
-    private javax.swing.JTextField tTelefono;
     // End of variables declaration//GEN-END:variables
 }

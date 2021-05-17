@@ -36,9 +36,8 @@ public class DataAccess {
 
     public void ConectarDB() {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/farmaciadb", 
-                    "AdminDB", 
-                    "Tecpurisima.123");
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            con = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-IDGCESK:1433;databaseName=SimisoftDB;IntegratedSecurity=true;");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error en la conexion " + e.getMessage());
         }
