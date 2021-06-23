@@ -100,8 +100,9 @@ public class Municipios {
         
     }
     
-    public DefaultTableModel Search(String columna, String busqueda) {
-        String query = "SELECT * FROM Municipios WHERE " +columna + " = '" + busqueda + "' ";
+    public DefaultTableModel Search(String nombre){
+        String query = "SELECT idMunicipio ID, m.nombre Nombre, e.nombre Estado FROM municipios m\n"
+                + "INNER JOIN Estados e ON e.idEstado = m.idEstado WHERE m.nombre = '" + nombre + "'";
         return dataAcces.Query(query);
     }
 }

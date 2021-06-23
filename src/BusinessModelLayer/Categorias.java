@@ -108,8 +108,8 @@ public class Categorias {
         return dataAcces.Query(query);
     }
     
-    public DefaultTableModel Search(String columna, String busqueda) {
-        String query = "SELECT * FROM Categorias WHERE " +columna + " = '" + busqueda + "' ";
+    public DefaultTableModel Search(String nombre) {
+        String query = "SELECT idCategoria ID, nombre Nombre, activo Activo FROM Categorias WHERE nombre = '" + nombre + "' ";
         return dataAcces.Query(query);
     }
 }

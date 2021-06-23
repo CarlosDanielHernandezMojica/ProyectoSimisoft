@@ -172,8 +172,10 @@ public class Usuarios {
         return dataAcces.Query(query);
     }
     
-    public DefaultTableModel Search(String columna, String busqueda) {
-        String query = "SELECT * FROM Usuarios WHERE " +columna + " = '" + busqueda + "' ";
+    public DefaultTableModel Search(String nombre) {
+        String query = "select idUsuario ID, u.nombre Nombre, tipoUsuario Rol, usuario Usuario, s.nombre Sucursal, c.calle Direccion from usuarios u\n"
+                + "INNER JOIN Sucursales s on s.idSucursal = u.idSucursal\n"
+                + "inner join Contactos c on c.idContacto = u.idContacto WHERE u.nombre = '" + nombre + "'";
         return dataAcces.Query(query);
     }
 }

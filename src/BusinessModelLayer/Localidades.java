@@ -99,8 +99,9 @@ public class Localidades {
         return dataAcces.Query(query);
     }
     
-    public DefaultTableModel Search(String columna, String busqueda) {
-        String query = "SELECT * FROM Localidades WHERE " +columna + " = '" + busqueda + "' ";
+    public DefaultTableModel Search(String nombre) {
+        String query = "SELECT idLocalidad ID, l.nombre Nombre, m.nombre Municipio FROM Localidades l\n"
+                + "INNER JOIN Municipios m ON m.idMunicipio = l.idMunicipio WHERE l.nombre = '" + nombre + "'";
         return dataAcces.Query(query);
     }
 }

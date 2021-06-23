@@ -3,32 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/ViewLayer/frmClientes.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/ViewLayer/frmContactos.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/BusinessModelLayer/Proveedores.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/ViewLayer/frmEstados.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/ViewLayer/frmCategorias.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/BusinessModelLayer/Estados.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/ViewLayer/frmFarmacias.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/ViewLayer/frmProductoPorveedor.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/BusinessModelLayer/Categorias.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/ViewLayer/frmLocalidades.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/ViewLayer/frmProductos.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/BusinessModelLayer/Sucursales.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/DataAccessLayer/DataAccess.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/BusinessModelLayer/Clientes.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/BusinessModelLayer/Municipios.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/ViewLayer/Test.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/ViewLayer/frmBusqueda.java</file>
             <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/BusinessModelLayer/Usuarios.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/BusinessModelLayer/Productos.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/BusinessModelLayer/Contactos.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/ViewLayer/frmMunicipios.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/BusinessModelLayer/ProductosProveedores.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/ViewLayer/frmMain.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/ViewLayer/frmNContacto.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/BusinessModelLayer/Localidades.java</file>
-            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/ViewLayer/frmUsuarios.java</file>
+            <file>file:/C:/Users/Carlos%20D/Documents/NetBeansProjects/SimiSoft/src/DataAccessLayer/DataAccess.java</file>
         </group>
     </open-files>
 </project-private>

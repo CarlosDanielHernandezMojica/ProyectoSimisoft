@@ -85,8 +85,8 @@ public class Estados {
         return dataAcces.Query(query);
     } 
     
-    public DefaultTableModel Search(String columna, String busqueda) {
-        String query = "SELECT * FROM Estados WHERE " +columna + " = '" + busqueda + "' ";
+    public DefaultTableModel Search(String nombre) {
+        String query = "SELECT idEstado ID, nombre Nombre FROM estados WHERE nombre ='" + nombre + "'";
         return dataAcces.Query(query);
     }
 }

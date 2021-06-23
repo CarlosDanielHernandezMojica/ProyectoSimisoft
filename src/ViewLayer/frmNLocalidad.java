@@ -147,14 +147,14 @@ public class frmNLocalidad extends javax.swing.JDialog {
             localidad.setIdMunicipio(idMunicipio);
             
             if (localidad.Update()) {
-                JOptionPane.showMessageDialog(null, "Producto actualizado correctamente");
+                JOptionPane.showMessageDialog(null, "Localidad actualizada correctamente");
                 this.dispose();
             }
 
         } else {
             if (new Localidades(0, tNombre.getText(),
                     idMunicipio).Add()) {
-                JOptionPane.showMessageDialog(this, "Producto agregado correctamente");
+                JOptionPane.showMessageDialog(this, "Localidad agregada correctamente");
                 this.dispose();
             }
         }

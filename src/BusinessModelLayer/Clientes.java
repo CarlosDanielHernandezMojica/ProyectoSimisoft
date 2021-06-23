@@ -123,8 +123,9 @@ public class Clientes {
         return dataAcces.Query(query);
     }
     
-    public DefaultTableModel Search(String columna, String busqueda) {
-        String query = "SELECT * FROM Clientes WHERE " +columna + " = '" + busqueda + "' ";
+    public DefaultTableModel Search(String nombre) {
+        String query = "Select idCliente ID, nombre Nombre, c.calle Direccion, activo Activo from clientes cl \n"
+                + "INNER join contactos c on c.idContacto = cl.idContacto WHERE cl.nombre = '" + nombre + "'";
         return dataAcces.Query(query);
     }
 

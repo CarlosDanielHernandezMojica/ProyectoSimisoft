@@ -27,9 +27,6 @@ public class frmProductos extends javax.swing.JInternalFrame {
         initComponents();
         jtProductos.setModel(new Productos().GetAllModelNew());
         
-        for (int i = 0; i < producto.GetAllModel().getColumnCount(); i++) {
-            cbColumna.addItem(producto.GetAllModel().getColumnName(i).toString());
-        }
         
         
     }
@@ -50,10 +47,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
         bEliminar = new javax.swing.JButton();
         bOrdenar = new javax.swing.JButton();
         bBuscar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        cbColumna = new javax.swing.JComboBox<>();
-        cbBusqueda = new javax.swing.JComboBox<>();
-        bBuscar1 = new javax.swing.JButton();
+        txtBuscar = new javax.swing.JTextField();
         ScrollPanel = new javax.swing.JScrollPane();
         jtProductos = new javax.swing.JTable();
 
@@ -135,33 +129,20 @@ public class frmProductos extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(bBuscar);
 
-        jLabel1.setText("Buscar por:");
-        jToolBar1.add(jLabel1);
-
-        cbColumna.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbColumnaItemStateChanged(evt);
-            }
-        });
-        cbColumna.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                cbColumnaMouseExited(evt);
-            }
-        });
-        jToolBar1.add(cbColumna);
-
-        jToolBar1.add(cbBusqueda);
-
-        bBuscar1.setText("Buscar");
-        bBuscar1.setFocusable(false);
-        bBuscar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bBuscar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        bBuscar1.addActionListener(new java.awt.event.ActionListener() {
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bBuscar1ActionPerformed(evt);
+                txtBuscarActionPerformed(evt);
             }
         });
-        jToolBar1.add(bBuscar1);
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
+        jToolBar1.add(txtBuscar);
 
         jtProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -219,7 +200,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
             obj.setModal(true);
             obj.setVisible(true);
             jtProductos.setModel(new Productos().GetAllModelNew());
-
+                
         } else {
             JOptionPane.showMessageDialog(rootPane, "Debes seleccionar un producto");
         }
@@ -237,7 +218,7 @@ public class frmProductos extends javax.swing.JInternalFrame {
                 if (obj.Delete()) {
                     JOptionPane.showMessageDialog(this, "Producto eliminado");
                 }
-                jtProductos.setModel(obj.GetAllModel());
+                jtProductos.setModel(obj.GetAllModelNew());
             }
 
         } else {
@@ -257,30 +238,34 @@ public class frmProductos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bOrdenarActionPerformed
 
     private void bBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarActionPerformed
+        if (txtBuscar.getText().isEmpty() == false) {
+            System.out.println(producto.Search(txtBuscar.getText()).getRowCount());
+
+            if(producto.Search(txtBuscar.getText()).getRowCount() > 0){
+                jtProductos.setModel(producto.Search(txtBuscar.getText()));
+            }else{
+                JOptionPane.showMessageDialog(this, "El registro no existe");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe ingresar una palabra");
+        }
 
     }//GEN-LAST:event_bBuscarActionPerformed
 
-    private void cbColumnaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbColumnaItemStateChanged
-        int selected = 0;
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
 
-        cbBusqueda.removeAllItems();
+    }//GEN-LAST:event_txtBuscarActionPerformed
 
-        selected = cbColumna.getSelectedIndex();
-        System.out.println(cbColumna.getSelectedIndex() + 1);
-        for (int i = 0; i < producto.GetAllModel().getRowCount(); i++) {
+    private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
 
-            cbBusqueda.addItem(producto.GetAllModel().getValueAt(i, selected).toString());
+    }//GEN-LAST:event_txtBuscarKeyPressed
 
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        if(txtBuscar.getText().isEmpty()){
+            jtProductos.setModel(producto.GetAllModelNew());
         }
-    }//GEN-LAST:event_cbColumnaItemStateChanged
-
-    private void cbColumnaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbColumnaMouseExited
-
-    }//GEN-LAST:event_cbColumnaMouseExited
-
-    private void bBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscar1ActionPerformed
-        jtProductos.setModel(producto.Search(cbColumna.getSelectedItem().toString(), cbBusqueda.getSelectedItem().toString()));
-    }//GEN-LAST:event_bBuscar1ActionPerformed
+    }//GEN-LAST:event_txtBuscarKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -288,14 +273,11 @@ public class frmProductos extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane ScrollPanel;
     private javax.swing.JButton bActualizar;
     private javax.swing.JButton bBuscar;
-    private javax.swing.JButton bBuscar1;
     private javax.swing.JButton bEliminar;
     private javax.swing.JButton bModificar;
     private javax.swing.JButton bOrdenar;
-    private javax.swing.JComboBox<String> cbBusqueda;
-    private javax.swing.JComboBox<String> cbColumna;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTable jtProductos;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

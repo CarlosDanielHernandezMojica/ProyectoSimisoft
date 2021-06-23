@@ -42,6 +42,7 @@ public class frmNContacto extends javax.swing.JDialog {
             }
         }
 
+        cbLocalidad.removeAllItems();
         for (int i = 0; i < localidad.GetAllModel().getRowCount(); i++) {
 
             if (localidad.GetAllModel().getValueAt(i, 2).equals(idMunicipio)) {
@@ -60,18 +61,23 @@ public class frmNContacto extends javax.swing.JDialog {
 
         tCodigoPostal.setText("" + contacto.getCodigoPostal());
         tTelefono.setText(contacto.getTelefono());
-
+        tCalle.setText(contacto.getCalle());
+        int idMunicipio = 0;
+        
         for (int i = 0; i < municipio.GetAllModel().getRowCount(); i++) {
             cbMunicipio.addItem(municipio.GetAllModel().getValueAt(i, 1).toString());
 
             if (contacto.getIdMunicipio() == (int) municipio.GetAllModel().getValueAt(i, 0)) {
                 cbMunicipio.setSelectedItem("" + municipio.GetAllModel().getValueAt(i, 1));
+                idMunicipio = (int) municipio.GetAllModel().getValueAt(i, 0);
             }
         }
-
+        
+        
+        cbLocalidad.removeAllItems();
         for (int i = 0; i < localidad.GetAllModel().getRowCount(); i++) {
 
-            if (localidad.getIdMunicipio() == (int) municipio.GetAllModel().getValueAt(i, 0)) {
+            if (localidad.GetAllModel().getValueAt(i, 2).equals(idMunicipio)) {
                 cbLocalidad.addItem(localidad.GetAllModel().getValueAt(i, 1).toString());
             }
         }
@@ -235,7 +241,7 @@ public class frmNContacto extends javax.swing.JDialog {
             contacto.setIdMunicipio(idMunicipio);
 
             if (contacto.Update()) {
-                JOptionPane.showMessageDialog(null, "Producto actualizado correctamente");
+                JOptionPane.showMessageDialog(null, "Contacto actualizado correctamente");
                 this.dispose();
             }
 
@@ -245,7 +251,7 @@ public class frmNContacto extends javax.swing.JDialog {
                     tTelefono.getText(),
                     idLocalidad,
                     idMunicipio).Add()) {
-                JOptionPane.showMessageDialog(this, "Producto agregado correctamente");
+                JOptionPane.showMessageDialog(this, "Contacto agregado correctamente");
                 this.dispose();
             }
         }

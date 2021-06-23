@@ -23,9 +23,6 @@ public class frmFarmacias extends javax.swing.JInternalFrame {
         initComponents();
         jtFarmacias.setModel(new Sucursales().GetAllModelNew());
 
-        for (int i = 0; i < farmacia.GetAllModel().getColumnCount(); i++) {
-            cbColumna.addItem(farmacia.GetAllModel().getColumnName(i).toString());
-        }
         
     }
 
@@ -44,10 +41,8 @@ public class frmFarmacias extends javax.swing.JInternalFrame {
         bModificar = new javax.swing.JButton();
         bEliminar = new javax.swing.JButton();
         bOrdenar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        cbColumna = new javax.swing.JComboBox<>();
-        cbBusqueda = new javax.swing.JComboBox<>();
         bBuscar = new javax.swing.JButton();
+        txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtFarmacias = new javax.swing.JTable();
 
@@ -116,23 +111,6 @@ public class frmFarmacias extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(bOrdenar);
 
-        jLabel1.setText("Buscar por:");
-        jToolBar1.add(jLabel1);
-
-        cbColumna.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbColumnaItemStateChanged(evt);
-            }
-        });
-        cbColumna.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                cbColumnaMouseExited(evt);
-            }
-        });
-        jToolBar1.add(cbColumna);
-
-        jToolBar1.add(cbBusqueda);
-
         bBuscar.setText("Buscar");
         bBuscar.setFocusable(false);
         bBuscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -143,6 +121,21 @@ public class frmFarmacias extends javax.swing.JInternalFrame {
             }
         });
         jToolBar1.add(bBuscar);
+
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
+        jToolBar1.add(txtBuscar);
 
         jtFarmacias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -208,7 +201,7 @@ public class frmFarmacias extends javax.swing.JInternalFrame {
                 if (obj.Delete()) {
                     JOptionPane.showMessageDialog(this, "Producto eliminado");
                 }
-                jtFarmacias.setModel(obj.GetAllModel());
+                jtFarmacias.setModel(obj.GetAllModelNew());
             }
 
         } else {
@@ -226,26 +219,34 @@ public class frmFarmacias extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bOrdenarActionPerformed
 
     private void bBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarActionPerformed
-        jtFarmacias.setModel(farmacia.Search(cbColumna.getSelectedItem().toString(), cbBusqueda.getSelectedItem().toString()));
+        if (txtBuscar.getText().isEmpty() == false) {
+            System.out.println(farmacia.Search(txtBuscar.getText()).getRowCount());
+
+            if(farmacia.Search(txtBuscar.getText()).getRowCount() > 0){
+                jtFarmacias.setModel(farmacia.Search(txtBuscar.getText()));
+            }else{
+                JOptionPane.showMessageDialog(this, "El registro no existe");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe ingresar una palabra");
+        }
+
     }//GEN-LAST:event_bBuscarActionPerformed
 
-    private void cbColumnaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbColumnaItemStateChanged
-        int selected = 0;
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
 
-        cbBusqueda.removeAllItems();
+    }//GEN-LAST:event_txtBuscarActionPerformed
 
-        selected = cbColumna.getSelectedIndex();
-        System.out.println(cbColumna.getSelectedIndex() + 1);
-        for (int i = 0; i < farmacia.GetAllModel().getRowCount(); i++) {
+    private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
 
-            cbBusqueda.addItem(farmacia.GetAllModel().getValueAt(i, selected).toString());
+    }//GEN-LAST:event_txtBuscarKeyPressed
 
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        if(txtBuscar.getText().isEmpty()){
+            jtFarmacias.setModel(farmacia.GetAllModelNew());
         }
-    }//GEN-LAST:event_cbColumnaItemStateChanged
-
-    private void cbColumnaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbColumnaMouseExited
-
-    }//GEN-LAST:event_cbColumnaMouseExited
+    }//GEN-LAST:event_txtBuscarKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -255,12 +256,10 @@ public class frmFarmacias extends javax.swing.JInternalFrame {
     private javax.swing.JButton bModificar;
     private javax.swing.JButton bNuevo;
     private javax.swing.JButton bOrdenar;
-    private javax.swing.JComboBox<String> cbBusqueda;
-    private javax.swing.JComboBox<String> cbColumna;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTable jtFarmacias;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 
 }

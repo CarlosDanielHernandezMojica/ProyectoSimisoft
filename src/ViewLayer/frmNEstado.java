@@ -116,13 +116,13 @@ public class frmNEstado extends javax.swing.JDialog {
             estado.setNombre(tEstado.getText());
             
             if (estado.Update()) {
-                JOptionPane.showMessageDialog(null, "Producto actualizado correctamente");
+                JOptionPane.showMessageDialog(null, "Estado actualizado correctamente");
                 this.dispose();
             }
 
         } else {
             if (new Estados(0, tEstado.getText()).Add()) {
-                JOptionPane.showMessageDialog(this, "Producto agregado correctamente");
+                JOptionPane.showMessageDialog(this, "Estado agregado correctamente");
                 this.dispose();
             }
         }

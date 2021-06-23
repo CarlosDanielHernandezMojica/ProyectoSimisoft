@@ -188,6 +188,7 @@ public class frmNProducto extends javax.swing.JDialog {
             producto.setNombre(tNombre.getText());
             producto.setCaducidad(tCaducidad.getDate());
             producto.setPrecio(Double.parseDouble(tPrecio.getText()));
+            producto.setDescuento(Double.parseDouble(tDescuento.getText()));
             producto.setIdCategoria(idCategoria);
             producto.setActivo(true);
             

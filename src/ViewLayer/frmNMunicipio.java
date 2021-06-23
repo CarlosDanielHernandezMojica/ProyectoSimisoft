@@ -150,14 +150,14 @@ public class frmNMunicipio extends javax.swing.JDialog {
             municipio.setIdEstado(idEstado);
 
             if (municipio.Update()) {
-                JOptionPane.showMessageDialog(null, "Producto actualizado correctamente");
+                JOptionPane.showMessageDialog(null, "Municipio actualizado correctamente");
                 this.dispose();
             }
 
         } else {
             if (new Municipios(0, tNombre.getText(),
                     idEstado).Add()) {
-                JOptionPane.showMessageDialog(this, "Producto agregado correctamente");
+                JOptionPane.showMessageDialog(this, "Municipio agregado correctamente");
                 this.dispose();
             }
         }

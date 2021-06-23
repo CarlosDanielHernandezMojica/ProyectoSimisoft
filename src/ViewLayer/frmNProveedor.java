@@ -35,7 +35,7 @@ public class frmNProveedor extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         this.idProveedor = idProveedor;
-        proveedor.setIdContacto(idProveedor);;
+        proveedor.setIdProveedor(idProveedor);;
         proveedor.GetById();
         tNombre.setText(proveedor.getNombre());
         
@@ -120,9 +120,9 @@ public class frmNProveedor extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addComponent(cbConctacto, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bCancelar)
-                    .addComponent(bGuardar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bGuardar)
+                    .addComponent(bCancelar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -141,13 +141,13 @@ public class frmNProveedor extends javax.swing.JDialog {
                 System.out.println(contacto.GetAllModel().getValueAt(i, 0));
             }
         }
-        if (proveedor.getIdContacto()> 0) {
+        
+        if (proveedor.getIdProveedor() > 0) {
             proveedor.setNombre(tNombre.getText());
             proveedor.setIdContacto(idContacto);
             proveedor.setActivo(true);
-            
-            if (contacto.Update()) {
-                JOptionPane.showMessageDialog(null, "Producto actualizado correctamente");
+            if (proveedor.Update()) {
+                JOptionPane.showMessageDialog(null, "Proveedor actualizado correctamente");
                 this.dispose();
             }
 
@@ -155,7 +155,7 @@ public class frmNProveedor extends javax.swing.JDialog {
             if (new Proveedores(0, tNombre.getText(),
                 idContacto,
                 true).Add()) {
-            JOptionPane.showMessageDialog(this, "Producto agregado correctamente");
+            JOptionPane.showMessageDialog(this, "Proveedor agregado correctamente");
             this.dispose();
         }
         }

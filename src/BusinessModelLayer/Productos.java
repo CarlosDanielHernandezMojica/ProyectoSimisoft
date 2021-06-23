@@ -110,13 +110,13 @@ public class Productos {
     }
 
     public void GetById() {
-        String query = "SELECT *FROM Productos WHERE idProducto = " + idProducto;
+        String query = "SELECT * FROM Productos WHERE idProducto = " + idProducto;
         DefaultTableModel res = dataAcces.Query(query);
         idProducto = (int) res.getValueAt(0, 0);
         nombre = (String) res.getValueAt(0, 1);
-        precio = (Double) res.getValueAt(0, 2);
+        precio = Double.parseDouble(res.getValueAt(0, 2).toString()) ;
         caducidad = (Date) res.getValueAt(0, 3);
-        descuento = (Double) res.getValueAt(0, 4);
+        descuento = Double.parseDouble(res.getValueAt(0, 4).toString());
         idCategoria = (int) res.getValueAt(0, 5);
         activo = (boolean) res.getValueAt(0, 6);
     }
@@ -170,10 +170,10 @@ public class Productos {
         return dataAcces.Query(query);
     }
     
-    public DefaultTableModel Search(String columna, String busqueda) {
-        String query = "SELECT * FROM Productos WHERE " + columna + " = '" + busqueda+ "' " ;
+    public DefaultTableModel Search(String nombre) {
+        String query = "select idProducto ID, p.nombre Nombre, precio Precio, caducidad Caducidad, descuento Descuento, c.nombre Categoria, p.activo Activo  from productos p\n"
+                + "inner join Categorias c on c.idCategoria = p.idCategoria WHERE p.nombre ='" + nombre + "'";
         return dataAcces.Query(query);
     }
     
-
 }

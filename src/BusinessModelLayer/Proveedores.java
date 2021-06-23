@@ -122,8 +122,9 @@ public class Proveedores {
         return dataAcces.Query(query);
     }
     
-    public DefaultTableModel Search(String columna, String busqueda) {
-        String query = "SELECT * FROM Proveedores WHERE " + columna + " = '" + busqueda + "' ";
+    public DefaultTableModel Search(String nombre) {
+        String query = "SELECT idProveedor ID, nombre Nombre, c.calle Direccion, activo Activo from Proveedores p\n"
+                + "INNER JOIN Contactos c ON c.idContacto = p.idContacto WHERE p.nombre = '" + nombre + "'";
         return dataAcces.Query(query);
     }
 }

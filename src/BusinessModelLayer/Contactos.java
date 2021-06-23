@@ -138,8 +138,10 @@ public class Contactos {
         return dataAcces.Query(query);
     }
     
-    public DefaultTableModel Search(String columna, String busqueda) {
-        String query = "SELECT * FROM Contactos WHERE " + columna + " = '" + busqueda + "' ";
+    public DefaultTableModel Search(String nombre) {
+        String query = "SELECT idContacto ID, calle Calle, codigoPostal CP, telefono Telefono, l.nombre Localidad, m.nombre Municipio FROM contactos c\n"
+                + "INNER JOIN Localidades l ON l.idLocalidad = c.idLocalidad\n"
+                + "INNER JOIN Municipios m ON m.idMunicipio = c.idMunicipio WHERE codigoPostal = '" + nombre + "' ";
         return dataAcces.Query(query);
     }
     

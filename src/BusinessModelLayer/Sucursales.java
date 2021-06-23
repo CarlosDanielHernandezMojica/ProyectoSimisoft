@@ -95,6 +95,12 @@ public class Sucursales {
     }
 
     public boolean Update() {
+        int activo = 1;
+        if (this.activo) {
+            activo = 1;
+        } else {
+            activo = 0;
+        }
         String query = "UPDATE Sucursales SET "
                 + "nombre = '" + nombre + "', "
                 + "idContacto = " + idContacto + ","
@@ -140,8 +146,9 @@ public class Sucursales {
         return dataAcces.Query(query);
     }
     
-    public DefaultTableModel Search(String columna, String busqueda) {
-        String query = "SELECT * FROM Sucursales WHERE " +columna + " = '" + busqueda + "' ";
+    public DefaultTableModel Search(String nombre) {
+        String query = "select idSucursal ID, nombre Nombre, c.calle Direccion, activo Activo from sucursales s\n"
+                + "Inner join Contactos c on c.idContacto = s.idContacto WHERE s.nombre = '" + nombre + "'";
         return dataAcces.Query(query);
     }
 }
